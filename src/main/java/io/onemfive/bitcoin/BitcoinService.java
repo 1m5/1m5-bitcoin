@@ -1,5 +1,9 @@
 package io.onemfive.bitcoin;
 
+import io.onemfive.bitcoin.blockstore.SPVBlockStore;
+import io.onemfive.bitcoin.blockchain.SPVBlockChain;
+import io.onemfive.bitcoin.network.PeerGroup;
+import io.onemfive.bitcoin.wallet.Wallet;
 import io.onemfive.core.BaseService;
 import io.onemfive.data.Envelope;
 import io.onemfive.data.Route;
@@ -17,6 +21,11 @@ public class BitcoinService extends BaseService {
     private static final Logger LOG = Logger.getLogger(BitcoinService.class.getName());
 
     public static final String OPERATION_SEND = "SEND";
+
+    private SPVBlockChain blockChain;
+    private SPVBlockStore blockStore;
+    private PeerGroup peerGroup;
+    private Wallet wallet;
 
     @Override
     public void handleDocument(Envelope e) {
