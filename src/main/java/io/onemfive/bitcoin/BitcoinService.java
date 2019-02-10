@@ -1,10 +1,12 @@
 package io.onemfive.bitcoin;
 
-import io.onemfive.bitcoin.blockstore.SPVBlockStore;
-import io.onemfive.bitcoin.blockchain.SPVBlockChain;
-import io.onemfive.bitcoin.network.PeerGroup;
+import io.onemfive.bitcoin.blockchain.BlockChain;
+import io.onemfive.bitcoin.blockchain.BlockChainParameters;
+import io.onemfive.bitcoin.blockstore.BlockStore;
+import io.onemfive.bitcoin.network.*;
 import io.onemfive.bitcoin.wallet.Wallet;
 import io.onemfive.core.BaseService;
+import io.onemfive.core.ServiceStatus;
 import io.onemfive.data.Envelope;
 import io.onemfive.data.Route;
 
@@ -12,7 +14,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 /**
- * TODO: Add Description
+ * Service for providing access to the Bitcoin network
  *
  * @author objectorange
  */
@@ -22,10 +24,12 @@ public class BitcoinService extends BaseService {
 
     public static final String OPERATION_SEND = "SEND";
 
-    private SPVBlockChain blockChain;
-    private SPVBlockStore blockStore;
+    private BlockChain blockChain;
+    private BlockStore blockStore;
     private PeerGroup peerGroup;
     private Wallet wallet;
+
+    private BlockChainParameters parameters;
 
     @Override
     public void handleDocument(Envelope e) {
@@ -46,22 +50,43 @@ public class BitcoinService extends BaseService {
 
     @Override
     public boolean start(Properties properties) {
+        LOG.info("Starting....");
+        updateStatus(ServiceStatus.STARTING);
+        // BlockChainParameters initialization; network property values are: main | test | dev
+        parameters = BlockChainParameters.buildParams(properties.getProperty("network"));
 
-
+        updateStatus(ServiceStatus.RUNNING);
+        LOG.info("Started.");
         return true;
     }
 
     @Override
     public boolean shutdown() {
+        LOG.info("Shutting down...");
+        updateStatus(ServiceStatus.SHUTTING_DOWN);
 
 
+        updateStatus(ServiceStatus.SHUTDOWN);
+        LOG.info("Shutdown.");
         return true;
     }
 
     @Override
     public boolean gracefulShutdown() {
+        LOG.info("Gracefully shutting down...");
+        updateStatus(ServiceStatus.GRACEFULLY_SHUTTING_DOWN);
 
 
+        updateStatus(ServiceStatus.GRACEFULLY_SHUTDOWN);
+        LOG.info("Gracefully shutdown.");
         return true;
+    }
+
+    public static void main(String[] args) {
+        BitcoinService service = new BitcoinService();
+        Properties props = new Properties();
+        props.put("network", args[0]);
+        service.start(props);
+
     }
 }

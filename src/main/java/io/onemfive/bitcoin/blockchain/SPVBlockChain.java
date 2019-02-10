@@ -5,5 +5,5 @@ package io.onemfive.bitcoin.blockchain;
  *
  * @author objectorange
  */
-public class SPVBlockChain {
+public class SPVBlockChain extends BlockChain {
 }

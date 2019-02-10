@@ -5,5 +5,5 @@ package io.onemfive.bitcoin.blockchain;
  *
  * @author objectorange
  */
-public class BlockchainParameters {
+public class FullPrunedBlockChain extends BlockChain {
 }

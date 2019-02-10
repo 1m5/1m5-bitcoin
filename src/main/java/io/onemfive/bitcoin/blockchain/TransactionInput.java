@@ -1,9 +1,9 @@
 package io.onemfive.bitcoin.blockchain;
 
 /**
- * A block of transactions
+ * TODO: Add Description
  *
  * @author objectorange
  */
-public class Block {
+public class TransactionInput {
 }

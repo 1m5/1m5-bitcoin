@@ -5,6 +5,6 @@ package io.onemfive.bitcoin.blockstore;
  *
  * @author objectorange
  */
-public class SPVBlockStore extends BlockStore {
+public class FullPrunedBlockStore extends BlockStore {
 
 }
