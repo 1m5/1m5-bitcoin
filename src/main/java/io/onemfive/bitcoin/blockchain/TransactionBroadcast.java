@@ -1,6 +1,6 @@
 package io.onemfive.bitcoin.blockchain;
 
-import io.onemfive.bitcoin.network.RejectionMessage;
+import io.onemfive.bitcoin.packet.RejectPacket;
 import io.onemfive.bitcoin.network.Peer;
 import io.onemfive.bitcoin.network.PeerGroup;
 
@@ -23,6 +23,6 @@ public class TransactionBroadcast {
     private PeerGroup peerGroup;
     private Transaction tx;
     // Peers that returned a rejection message regarding this broadcast.
-    private Map<Peer, RejectionMessage> rejections = new HashMap<>();
+    private Map<Peer, RejectPacket> rejections = new HashMap<>();
 
 }
