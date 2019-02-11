@@ -15,6 +15,9 @@ import java.util.Map;
  */
 public class Wallet {
 
+    private int version;
+    private String description;
+
     /**
      * Transactions that didn't make it into the best chain yet. Pending transactions can be killed if a
      * double spend against them appears in the best chain, in which case they move to the dead pool.
