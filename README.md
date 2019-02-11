@@ -1,8 +1,11 @@
 # 1m5-bitcoin
-Bitcoin integration via Tor using a Simple Payment Verification (SPV) client.
+A censorship resistant and private Simple Payment Verification (SPV) client for Bitcoin.
+
+It uses Tor for accessing the Bitcoin blockchain until blocked then sidesteps blocks using
+I2P to get to a 1M5 node that has access to Tor using that node.
 
 It's a lightweight client to verify that a transaction is included in the Bitcoin blockchain, 
-without downloading the entire blockchain. The client only needs download the block headers, 
+without downloading the entire blockchain. The client only needs to download the block headers, 
 which are much smaller than the full blocks. To verify that a transaction is in a block, it requests 
 a proof of inclusion, in the form of a Merkle branch.
 
