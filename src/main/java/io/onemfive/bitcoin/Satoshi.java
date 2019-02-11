@@ -34,4 +34,8 @@ public class Satoshi implements Coin {
     public String symbol() {
         return "里";
     }
+
+    public Satoshi(long value) {
+        this.value = value;
+    }
 }

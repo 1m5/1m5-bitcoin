@@ -1,12 +1,13 @@
 package io.onemfive.bitcoin.blockchain;
 
+import io.onemfive.bitcoin.config.Config;
 import io.onemfive.bitcoin.blockstore.BlockStore;
 
 import java.util.logging.Logger;
 
 /**
  * Contains a series of {@link Block} instances chained together by verifying the rules
- * defined in the {@link BlockChainParameters}.
+ * defined in the {@link Config}.
  *
  * @author objectorange
  */
@@ -14,7 +15,7 @@ public abstract class BlockChain {
 
     private static Logger LOG = Logger.getLogger(BlockChain.class.getName());
 
-    protected BlockChainParameters parameters;
+    protected Config config;
 
     protected BlockStore blockStore;
 

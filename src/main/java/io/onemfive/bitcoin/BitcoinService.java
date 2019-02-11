@@ -1,8 +1,8 @@
 package io.onemfive.bitcoin;
 
 import io.onemfive.bitcoin.blockchain.BlockChain;
-import io.onemfive.bitcoin.blockchain.BlockChainParameters;
 import io.onemfive.bitcoin.blockstore.BlockStore;
+import io.onemfive.bitcoin.config.Config;
 import io.onemfive.bitcoin.network.*;
 import io.onemfive.bitcoin.wallet.Wallet;
 import io.onemfive.core.BaseService;
@@ -29,7 +29,7 @@ public class BitcoinService extends BaseService {
     private PeerGroup peerGroup;
     private Wallet wallet;
 
-    private BlockChainParameters parameters;
+    private Config config;
 
     @Override
     public void handleDocument(Envelope e) {
@@ -52,8 +52,12 @@ public class BitcoinService extends BaseService {
     public boolean start(Properties properties) {
         LOG.info("Starting....");
         updateStatus(ServiceStatus.STARTING);
-        // BlockChainParameters initialization; network property values are: main | test | dev
-        parameters = BlockChainParameters.buildParams(properties.getProperty("network"));
+        // Config initialization; network property values are: main | test | dev
+        config = Config.getConfig(properties.getProperty("network"));
+        if(config==null) {
+            LOG.severe("Config not instantiated; start failed.");
+            return false;
+        }
 
         updateStatus(ServiceStatus.RUNNING);
         LOG.info("Started.");
