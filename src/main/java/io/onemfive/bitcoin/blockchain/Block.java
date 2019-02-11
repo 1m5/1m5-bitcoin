@@ -25,7 +25,7 @@ public class Block {
     private Hash prevBlockHash;
     private Hash merkleRoot;
     private long time;
-    private long difficultyTarget = 487063544L; // (0x1d07fff8)
+    private long difficultyTarget = 0x1d07fff8L;
     private long nonce;
 
     public Block(int version) {

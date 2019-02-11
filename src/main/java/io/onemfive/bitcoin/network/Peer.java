@@ -6,4 +6,8 @@ package io.onemfive.bitcoin.network;
  * @author objectorange
  */
 public class Peer {
+
+    public Peer() {
+
+    }
 }

@@ -7,9 +7,11 @@ import java.util.logging.Logger;
  *
  * @author objectorange
  */
-public abstract class Config {
+public abstract class BitcoinConfig {
 
-    private static Logger LOG = Logger.getLogger(Config.class.getName());
+    private static Logger LOG = Logger.getLogger(BitcoinConfig.class.getName());
+
+    protected String baseFolderPath = "bitcoin";
 
     protected String[] dnsSeeds;
     protected int[] addrSeeds;
@@ -19,8 +21,8 @@ public abstract class Config {
      * @param networkName Must be one of dev | test | main
      * @return
      */
-    public static Config getConfig(String networkName) {
-        Config c = null;
+    public static BitcoinConfig getConfig(String networkName) {
+        BitcoinConfig c = null;
         switch (networkName) {
             case "dev": {c = new DevNetConfig();break;}
             case "test": {c = new TestNetConfig();break;}
@@ -30,4 +32,11 @@ public abstract class Config {
         return c;
     }
 
+    public String[] getDnsSeeds() {
+        return dnsSeeds;
+    }
+
+    public int[] getAddrSeeds() {
+        return addrSeeds;
+    }
 }

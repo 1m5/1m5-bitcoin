@@ -5,6 +5,13 @@ package io.onemfive.bitcoin.config;
  *
  * @author objectorange
  */
-class DevNetConfig extends Config {
+class DevNetConfig extends BitcoinConfig {
+
+    DevNetConfig() {
+
+        dnsSeeds = null;
+
+        addrSeeds = null;
+    }
 
 }

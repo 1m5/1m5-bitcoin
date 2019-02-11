@@ -2,7 +2,7 @@ package io.onemfive.bitcoin;
 
 import io.onemfive.bitcoin.blockchain.BlockChain;
 import io.onemfive.bitcoin.blockstore.BlockStore;
-import io.onemfive.bitcoin.config.Config;
+import io.onemfive.bitcoin.config.BitcoinConfig;
 import io.onemfive.bitcoin.network.*;
 import io.onemfive.bitcoin.wallet.Wallet;
 import io.onemfive.core.BaseService;
@@ -26,10 +26,10 @@ public class BitcoinService extends BaseService {
 
     private BlockChain blockChain;
     private BlockStore blockStore;
-    private PeerGroup peerGroup;
+    private PeerDiscovery peerDiscovery;
     private Wallet wallet;
 
-    private Config config;
+    private BitcoinConfig config;
 
     @Override
     public void handleDocument(Envelope e) {
@@ -49,13 +49,17 @@ public class BitcoinService extends BaseService {
     }
 
     @Override
-    public boolean start(Properties properties) {
+    public boolean start(Properties p) {
         LOG.info("Starting....");
         updateStatus(ServiceStatus.STARTING);
-        // Config initialization; network property values are: main | test | dev
-        config = Config.getConfig(properties.getProperty("network"));
+        // BitcoinConfig initialization; network property values are: main | test | dev
+        if(!p.containsKey("io.onemfive.bitcoin.network")) {
+            LOG.severe("io.onemfive.bitcoin.network parameter is required.");
+            return false;
+        }
+        config = BitcoinConfig.getConfig(p.getProperty("io.onemfive.bitcoin.network"));
         if(config==null) {
-            LOG.severe("Config not instantiated; start failed.");
+            LOG.severe("BitcoinConfig not instantiated; start failed.");
             return false;
         }
 
@@ -89,8 +93,22 @@ public class BitcoinService extends BaseService {
     public static void main(String[] args) {
         BitcoinService service = new BitcoinService();
         Properties props = new Properties();
-        props.put("network", args[0]);
-        service.start(props);
-
+        for(String arg : args) {
+            String[] nvp = arg.split("=");
+            props.put(nvp[0],nvp[1]);
+        }
+        if(service.start(props)) {
+            while(service.getServiceStatus() != ServiceStatus.SHUTDOWN) {
+                try {
+                    synchronized (service) {
+                        service.wait(2 * 1000);
+                    }
+                } catch (InterruptedException e) {
+                    System.exit(0);
+                }
+            }
+        } else {
+            System.exit(-1);
+        }
     }
 }

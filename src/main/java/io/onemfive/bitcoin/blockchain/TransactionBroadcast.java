@@ -2,7 +2,7 @@ package io.onemfive.bitcoin.blockchain;
 
 import io.onemfive.bitcoin.packet.RejectPacket;
 import io.onemfive.bitcoin.network.Peer;
-import io.onemfive.bitcoin.network.PeerGroup;
+import io.onemfive.bitcoin.network.PeerDiscovery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class TransactionBroadcast {
 
     private static final Logger log = Logger.getLogger(TransactionBroadcast.class.getName());
 
-    private PeerGroup peerGroup;
+    private PeerDiscovery peerDiscovery;
     private Transaction tx;
     // Peers that returned a rejection message regarding this broadcast.
     private Map<Peer, RejectPacket> rejections = new HashMap<>();
