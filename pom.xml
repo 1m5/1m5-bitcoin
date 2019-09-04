@@ -39,6 +39,29 @@
 		<developerConnection>scm:git@github.com/1m5/1m5-bitcoin</developerConnection>
 		<url>git@github.com/1m5/1m5-bitcoin</url>
 	</scm>
+	<profiles>
+		<profile>
+			<id>devnet</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<io.onemfive.bitcoin.network>dev</io.onemfive.bitcoin.network>
+			</properties>
+		</profile>
+		<profile>
+			<id>testnet</id>
+			<properties>
+				<io.onemfive.bitcoin.network>test</io.onemfive.bitcoin.network>
+			</properties>
+		</profile>
+		<profile>
+			<id>mainnet</id>
+			<properties>
+				<io.onemfive.bitcoin.network>main</io.onemfive.bitcoin.network>
+			</properties>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
