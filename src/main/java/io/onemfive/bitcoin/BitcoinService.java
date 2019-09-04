@@ -5,8 +5,6 @@ import io.onemfive.bitcoin.blockstore.BlockStore;
 import io.onemfive.bitcoin.config.BitcoinConfig;
 import io.onemfive.bitcoin.network.*;
 import io.onemfive.bitcoin.requests.SendRequest;
-import io.onemfive.bitcoin.vendor.BitcoinJ;
-import io.onemfive.bitcoin.vendor.BitcoinVendor;
 import io.onemfive.bitcoin.wallet.Wallet;
 import io.onemfive.core.BaseService;
 import io.onemfive.core.ServiceStatus;
@@ -32,7 +30,6 @@ public class BitcoinService extends BaseService {
     private BlockStore blockStore;
     private PeerDiscovery peerDiscovery;
     private Wallet wallet;
-    private BitcoinVendor bitcoinVendor;
 
     private BitcoinConfig config;
 
@@ -43,9 +40,9 @@ public class BitcoinService extends BaseService {
         switch(operation) {
             case OPERATION_SEND: {
                 SendRequest request = (SendRequest)DLC.getData(SendRequest.class,e);
-                if(!bitcoinVendor.send(request)) {
-                    LOG.warning("Issue sending BTC to "+request.base58To);
-                }
+//                if(!bitcoin.send(request)) {
+//                    LOG.warning("Issue sending BTC to "+request.base58To);
+//                }
                 break;
             }
             default: deadLetter(e); // Operation not supported
@@ -66,7 +63,6 @@ public class BitcoinService extends BaseService {
             LOG.severe("BitcoinConfig not instantiated; start failed.");
             return false;
         }
-        bitcoinVendor = new BitcoinJ(); // default
 
         updateStatus(ServiceStatus.RUNNING);
         LOG.info("Started.");
