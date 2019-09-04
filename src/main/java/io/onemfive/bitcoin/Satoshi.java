@@ -9,6 +9,7 @@ import io.onemfive.data.currency.Coin;
  */
 public class Satoshi implements Coin {
 
+    private String base58Address;
     private long value = 0L;
 
     @Override
@@ -23,6 +24,18 @@ public class Satoshi implements Coin {
     @Override
     public long maxSupply() {
         return 2100000000000000L;
+    }
+
+    public String getBase58Address() {
+        return base58Address;
+    }
+
+    public void setBase58Address(String base58Address) {
+        this.base58Address = base58Address;
+    }
+
+    public void setValue(long value) {
+        this.value = value;
     }
 
     @Override
